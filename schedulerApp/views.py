@@ -7,9 +7,11 @@ from .serializers import RequestSerializer
 from .task import reverse_request_title
 from datetime import datetime
 from apscheduler.schedulers.background import BackgroundScheduler
+from .singleton import SingletonClass
+
 
 class SchedulerApiView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
     
     # return list of all Request
     def get(self, request):
@@ -29,7 +31,9 @@ class SchedulerApiView(APIView):
             if serializer.is_valid():
                 serializer.save()
                 try:
-                    scheduler = BackgroundScheduler()
+                    singletonClass = SingletonClass()
+                    singletonClass.scheduler = BackgroundScheduler()
+                    scheduler = singletonClass.scheduler
                     scheduler.add_job(reverse_request_title, 'date', run_date=data['scheduledDateTime'], args=[serializer.data['id']], name=str(serializer.data['id']))
                     scheduler.start()
                     return Response(serializer.data, status=status.HTTP_200_OK)

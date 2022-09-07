@@ -4,6 +4,7 @@ from schedulerApp.task import reverse_request_title
 from .models import Request
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
+from .singleton import SingletonClass
 
 # Create your tests here.
 class RequestTest(TestCase):
@@ -50,8 +51,9 @@ class RequestTest(TestCase):
        
     def test_get_job(self):
         response = self.client.post('/schedulerApp/request', {'title': 'test3', 'scheduledDateTime': (datetime.now() + timedelta(seconds=5)).strftime('%Y-%m-%d %H:%M:%S')})
-        for job in self.scheduler.get_jobs():
+        singletonClass = SingletonClass()
+        scheduler = singletonClass.scheduler
+        for job in scheduler.get_jobs():
+            print("Job Name: ", job.name)
             self.assertEqual(job.name, str(response.data['id']))
             self.assertEqual(job.func, reverse_request_title)
-            self.assertEqual(job.args, [response.data['id']])
-            self.assertEqual(job.trigger.run_date, response.data['scheduledDateTime'])
