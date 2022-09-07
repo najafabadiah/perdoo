@@ -11,7 +11,7 @@ from .singleton import SingletonClass
 
 
 class SchedulerApiView(APIView):
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     
     # return list of all Request
     def get(self, request):
