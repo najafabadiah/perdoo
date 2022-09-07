@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'schedulerApp.apps.SchedulerappConfig',
     'authenticatorApp.apps.AuthenticatorappConfig',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
 ]
 
 REST_FRAMEWORK = {
@@ -117,7 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
