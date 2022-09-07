@@ -4,4 +4,4 @@ from .models import Request
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Request
-        fields = ('id', 'description', 'scheduledDateTime', 'status')
+        fields = ('id', 'title', 'scheduledDateTime', 'status')
